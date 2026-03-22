@@ -1,10 +1,13 @@
-# DineX
-DineX is a full-stack Restaurant Management System built using Spring Boot, MongoDB, HTML, CSS, and JavaScript. It supports user authentication, menu management, order processing, and an admin dashboard for efficient restaurant operations.
+# 🍽️ DineX - Restaurant Management System
+
+DineX is a full-stack Restaurant Management System built using Spring Boot, MongoDB, Maven, HTML, CSS, and JavaScript with a simple Bootstrap-based frontend.
+
+It is a beginner-friendly project that demonstrates complete end-to-end restaurant operations including user authentication, menu management, order processing, and an admin dashboard for efficient management.
 
 
-# Restaurant Management System
+## 📌 Purpose
+This project is designed to showcase full-stack development skills using modern Java technologies and is suitable for learning and portfolio demonstration.
 
-This is a complete beginner-friendly full-stack Restaurant Management System built with Spring Boot, MongoDB, Maven, and a simple Bootstrap frontend.
 
 ## Tech Stack
 
@@ -144,7 +147,7 @@ Note: this project uses Spring Boot 3.3.16, so Java 17 is required.
 
 ### 2. Configure MongoDB
 
-Make sure MongoDB is running locally, then update [`application.properties`](/C:/Users/CapulusTech/Documents/New%20project/src/main/resources/application.properties) if needed:
+Make sure MongoDB is running locally, then update [`application.properties`](/src/main/resources/application.properties) if needed:
 
 ```properties
 spring.data.mongodb.uri=mongodb://localhost:27017/restaurant_management
@@ -172,8 +175,12 @@ Visit [http://localhost:8080](http://localhost:8080)
 
 Use the included Postman file:
 
-- [Restaurant-Management-System.postman_collection.json](/C:/Users/CapulusTech/Documents/New%20project/postman/Restaurant-Management-System.postman_collection.json)
+- [Restaurant-Management-System.postman_collection.json](/postman/Restaurant-Management-System.postman_collection.json)
 
 ## Sample Data Note
 
-Sample users, menu items, and orders are inserted automatically by [DataInitializer.java](/C:/Users/CapulusTech/Documents/New%20project/src/main/java/com/example/restaurant/config/DataInitializer.java) when the MongoDB collections are empty.
+Sample users, menu items, and orders are inserted automatically by [DataInitializer.java](/src/main/java/com/example/restaurant/config/DataInitializer.java) when the MongoDB collections are empty.
+
+
+
+👨‍💻 Developed by  Hemaraj D S
