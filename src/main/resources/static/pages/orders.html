@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders | NoirTable RMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* =========================
+     CARD LAYOUT IMPROVEMENT
+  ========================= */
+
+        .order-board-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; /* more breathing space */
+        }
+
+        /* =========================
+           CARD DESIGN FIX
+        ========================= */
+
+        .order-card {
+            padding: 18px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        /* spacing inside card */
+        .order-card > * {
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           STATUS BADGES FIX
+        ========================= */
+
+        .badge,
+        .status-chip {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        /* =========================
+           ITEM BLOCK FIX
+        ========================= */
+
+        .order-item {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* =========================
+           🔴 MAIN FIX: DROPDOWN + BUTTON OVERLAP
+        ========================= */
+
+        .order-item .form-select {
+            width: 100%;          /* full width inside card */
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        .order-item .btn {
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        /* prevent overlap */
+        .order-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================
+           TEXT SPACING IMPROVEMENT
+        ========================= */
+
+        .order-card h5,
+        .order-card h6 {
+            margin-bottom: 6px;
+        }
+
+        .order-card p {
+            margin-bottom: 4px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* =========================
+           HEADER SPACING
+        ========================= */
+
+        .panel-header {
+            margin-bottom: 16px;
+        }
+
+        /* =========================
+           FILTER BAR FIX (clean alignment)
+        ========================= */
+
+        .board-toolbar {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .board-filter {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* smaller selects */
+        .board-filter select.form-select {
+            width: 140px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 992px) {
+            .order-board-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .order-board-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="appNavbar"></div>
+
+<main class="page-shell">
+    <div class="container-fluid page-container page-container--wide">
+        <div id="messageBox"></div>
+
+        <section class="hero-panel hero-panel--compact mb-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-8">
+                    <span class="eyebrow">Live order board</span>
+                    <h1 class="hero-title mt-3">Track every order in motion</h1>
+                    <p class="hero-copy mb-0">Waiters, kitchen, cashier, and admin each see the service data they need, with billing and status updates in one shared flow.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="hero-chip-group justify-content-lg-end">
+                        <span class="hero-chip" id="ordersCount">0</span>
+                        <a href="/manual-order" class="btn btn-light rounded-pill px-4">Manual Order</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-card table-card--elevated mb-4 hidden" id="billSummarySection">
+            <div class="panel-header">
+                <div>
+                    <div class="eyebrow">Final bill view</div>
+                    <h3 class="section-title mb-0">Table bill summary</h3>
+                </div>
+                <select id="billTableSelect" class="form-select" style="max-width: 220px;"></select>
+            </div>
+            <div class="mini-stat-grid">
+                <div class="mini-stat">
+                    <div class="mini-stat__label">Table</div>
+                    <div class="mini-stat__value" id="billTableLabel">-</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat__label">Orders</div>
+                    <div class="mini-stat__value" id="billOrderCount">0</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat__label">Total bill</div>
+                    <div class="mini-stat__value" id="billTotalAmount">Rs. 0.00</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-card table-card--elevated">
+            <div class="panel-header mb-4">
+                <div>
+                    <div class="eyebrow">Service board</div>
+                    <h3 class="section-title mb-0">Active order tickets</h3>
+                </div>
+                <div class="board-toolbar">
+                    <label class="board-filter">
+                        <span>Date</span>
+                        <input type="date" id="orderDateFilter" class="form-control">
+                    </label>
+                    <label class="board-filter">
+                        <span>Table</span>
+                        <select id="orderTableFilter" class="form-select">
+                            <option value="ALL">All tables</option>
+                        </select>
+                    </label>
+                    <label class="board-filter">
+                        <span>Status</span>
+                        <select id="orderStatusFilter" class="form-select">
+                            <option value="ALL">All statuses</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="PREPARING">Preparing</option>
+                            <option value="COMPLETED">Completed</option>
+                        </select>
+                    </label>
+                    <label class="board-filter board-filter--search">
+                        <span>Search</span>
+                        <input type="search" id="orderSearchFilter" class="form-control" placeholder="Order, customer, dish">
+                    </label>
+                </div>
+            </div>
+            <div class="order-board-grid" id="ordersTableBody"></div>
+            <div id="ordersEmptyState" class="empty-state hidden mt-3">
+                <div class="empty-state__title">No orders found</div>
+                <div class="empty-state__text">New service tickets will appear here as soon as orders start moving through the floor.</div>
+            </div>
+            <div class="board-pagination hidden" id="ordersPagination">
+                <button class="btn btn-outline-light btn-sm rounded-pill px-3" id="ordersPrevPage">Previous</button>
+                <div class="board-pagination__meta" id="ordersPageMeta">Page 1</div>
+                <button class="btn btn-outline-light btn-sm rounded-pill px-3" id="ordersNextPage">Next</button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/orders.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGlow" x1="36" y1="28" x2="186" y2="192" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6D365"/>
+      <stop offset="0.5" stop-color="#E8B84B"/>
+      <stop offset="1" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="midnight" x1="20" y1="16" x2="196" y2="204" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18182B"/>
+      <stop offset="1" stop-color="#090911"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="220" height="220" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="20" y="16" width="180" height="180" rx="42" fill="url(#midnight)"/>
+    <rect x="24.5" y="20.5" width="171" height="171" rx="37.5" stroke="url(#goldGlow)" stroke-opacity="0.28" stroke-width="9"/>
+    <path d="M69 72C69 60.4 78.4 51 90 51H130C141.6 51 151 60.4 151 72V99C151 110.6 141.6 120 130 120H117L142 153H118.5L95.5 122.5H92V153H69V72Z" fill="url(#goldGlow)"/>
+    <path d="M92 72V101H127C132.523 101 137 96.5228 137 91V82C137 76.4772 132.523 72 127 72H92Z" fill="#0B0B13"/>
+    <path d="M88 69H95V153H88V69Z" fill="#1D1D31"/>
+    <path d="M64 171H156" stroke="url(#goldGlow)" stroke-width="8" stroke-linecap="round" stroke-opacity="0.88"/>
+    <path d="M83 164C83 154.059 91.0589 146 101 146H119C128.941 146 137 154.059 137 164V171H83V164Z" fill="url(#goldGlow)" fill-opacity="0.2"/>
+  </g>
+</svg>
