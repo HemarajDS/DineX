@@ -4,7 +4,6 @@ DineX is a full-stack Restaurant Management System built using Spring Boot, Mong
 
 It is a beginner-friendly project that demonstrates complete end-to-end restaurant operations including user authentication, menu management, order processing, and an admin dashboard for efficient management.
 
-
 ## 📌 Purpose
 This project is designed to showcase full-stack development skills using modern Java technologies and is suitable for learning and portfolio demonstration.
 
